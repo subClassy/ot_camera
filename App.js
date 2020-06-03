@@ -1,6 +1,6 @@
 import React from "react";
 
-import CameraPage from "./src/camera.page";
+import CameraPage from "./src/camera";
 
 class App extends React.Component {
   render() {
