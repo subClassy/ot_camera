@@ -23,6 +23,12 @@ export default StyleSheet.create({
     height: 100,
     bottom: 0,
   },
+  topOptionMenu: {
+    width: winWidth,
+    position: "absolute",
+    height: 100,
+    top: 25,
+  },
   captureBtn: {
     width: 70,
     height: 70,

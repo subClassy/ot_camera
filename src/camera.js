@@ -7,6 +7,7 @@ import * as Permissions from "expo-permissions";
 import styles from "./style";
 import Toolbar from "./cameraToolbar";
 import Gallery from "./gallery";
+import OptionMenu from "./cameraOptionMenu";
 
 class CameraPage extends React.Component {
   camera = null;
@@ -18,6 +19,8 @@ class CameraPage extends React.Component {
     cameraType: Camera.Constants.Type.back,
     hasCameraPermission: null,
     hasCameraRollPermission: null,
+    wbMode: Camera.Constants.WhiteBalance.auto,
+    wbMenuVisible: false,
   };
 
   setFlashMode = (flashMode) => this.setState({ flashMode });
@@ -29,6 +32,9 @@ class CameraPage extends React.Component {
       this.setState({ capturing: false });
     }
   };
+
+  handleWbMenu = (wbMenuVisible) => this.setState({ wbMenuVisible });
+  setWbMode = (wbMode) => this.setState({ wbMode, wbMenuVisible: false });
 
   handleShortCapture = async () => {
     const photoData = await this.camera.takePictureAsync();
@@ -74,6 +80,8 @@ class CameraPage extends React.Component {
       cameraType,
       capturing,
       captures,
+      wbMode,
+      wbMenuVisible,
     } = this.state;
 
     if (hasCameraPermission === null || hasCameraRollPermission === null) {
@@ -95,10 +103,17 @@ class CameraPage extends React.Component {
           <Camera
             type={cameraType}
             flashMode={flashMode}
+            whiteBalance={wbMode}
             style={styles.preview}
             ref={(camera) => (this.camera = camera)}
           />
         </View>
+        <OptionMenu
+          cameraWhiteBalance={wbMode}
+          setWbMode={this.setWbMode}
+          wbMenuVisible={wbMenuVisible}
+          handleWbMenu={this.handleWbMenu}
+        />
 
         {captures.length > 0 && <Gallery captures={captures} />}
 
