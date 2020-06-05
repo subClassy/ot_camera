@@ -91,6 +91,7 @@ const OptionMenu = ({
             onSlidingComplete={() => hideZoomSlider()}
             style={styles.slider}
             minimumTrackTintColor="white"
+            maximumTrackTintColor="grey"
             thumbTintColor="white"
           />
         </Col>

@@ -46,11 +46,24 @@ class CameraPage extends React.Component {
     });
   };
 
-  handleWbMenu = (wbMenuVisible) => this.setState({ wbMenuVisible });
+  handleWbMenu = (wbMenuVisible) => {
+    if (wbMenuVisible === true) {
+      this.setState({
+        zoomSliderVisible: false,
+      });
+    }
+    this.setState({ wbMenuVisible });
+  };
   setWbMode = (wbMode) => this.setState({ wbMode, wbMenuVisible: false });
 
-  handleZoomSlider = (zoomSliderVisible) =>
+  handleZoomSlider = (zoomSliderVisible) => {
+    if (zoomSliderVisible === true) {
+      this.setState({
+        wbMenuVisible: false,
+      });
+    }
     this.setState({ zoomSliderVisible });
+  };
 
   handleZoomValueChange = (zoomValue) => this.setState({ zoomValue });
 
