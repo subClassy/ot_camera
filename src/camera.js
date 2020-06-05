@@ -114,7 +114,7 @@ class CameraPage extends React.Component {
 
     return (
       <React.Fragment>
-        <View>
+        <View style={styles.background}>
           <Camera
             type={cameraType}
             flashMode={flashMode}

@@ -1,16 +1,17 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 const { width: winWidth, height: winHeight } = Dimensions.get("window");
+const camHeight = (4 * winWidth) / 3;
 
 export default StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: "black",
+  },
   preview: {
-    height: winHeight,
     width: winWidth,
-    position: "absolute",
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
+    height: camHeight,
+    top: winHeight / 4,
   },
   alignCenter: {
     flex: 1,
