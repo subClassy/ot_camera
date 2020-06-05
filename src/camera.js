@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Permissions from "expo-permissions";
@@ -21,6 +21,8 @@ class CameraPage extends React.Component {
     hasCameraRollPermission: null,
     wbMode: Camera.Constants.WhiteBalance.auto,
     wbMenuVisible: false,
+    zoomSliderVisible: false,
+    zoomValue: 0,
   };
 
   setFlashMode = (flashMode) => this.setState({ flashMode });
@@ -33,9 +35,6 @@ class CameraPage extends React.Component {
     }
   };
 
-  handleWbMenu = (wbMenuVisible) => this.setState({ wbMenuVisible });
-  setWbMode = (wbMode) => this.setState({ wbMode, wbMenuVisible: false });
-
   handleShortCapture = async () => {
     const photoData = await this.camera.takePictureAsync();
     const { uri } = photoData;
@@ -45,6 +44,20 @@ class CameraPage extends React.Component {
       capturing: false,
       captures: [photoData, ...this.state.captures],
     });
+  };
+
+  handleWbMenu = (wbMenuVisible) => this.setState({ wbMenuVisible });
+  setWbMode = (wbMode) => this.setState({ wbMode, wbMenuVisible: false });
+
+  handleZoomSlider = (zoomSliderVisible) =>
+    this.setState({ zoomSliderVisible });
+
+  handleZoomValueChange = (zoomValue) => this.setState({ zoomValue });
+
+  hideZoomSlider = () => {
+    setTimeout(() => {
+      this.setState({ zoomSliderVisible: false });
+    }, 3000);
   };
 
   async componentDidMount() {
@@ -82,6 +95,8 @@ class CameraPage extends React.Component {
       captures,
       wbMode,
       wbMenuVisible,
+      zoomSliderVisible,
+      zoomValue,
     } = this.state;
 
     if (hasCameraPermission === null || hasCameraRollPermission === null) {
@@ -104,6 +119,7 @@ class CameraPage extends React.Component {
             type={cameraType}
             flashMode={flashMode}
             whiteBalance={wbMode}
+            zoom={zoomValue}
             style={styles.preview}
             ref={(camera) => (this.camera = camera)}
           />
@@ -113,6 +129,11 @@ class CameraPage extends React.Component {
           setWbMode={this.setWbMode}
           wbMenuVisible={wbMenuVisible}
           handleWbMenu={this.handleWbMenu}
+          zoomSliderVisible={zoomSliderVisible}
+          handleZoomSlider={this.handleZoomSlider}
+          zoomValue={zoomValue}
+          handleZoomValueChange={this.handleZoomValueChange}
+          hideZoomSlider={this.hideZoomSlider}
         />
 
         {captures.length > 0 && <Gallery captures={captures} />}

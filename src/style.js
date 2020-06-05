@@ -65,4 +65,10 @@ export default StyleSheet.create({
     width: 75,
     height: 75,
   },
+  slider: {
+    width: winWidth * 0.67,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 10,
+  },
 });

@@ -2,7 +2,7 @@ import React from "react";
 import { Camera } from "expo-camera";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Slider } from "react-native";
 
 import styles from "./style";
 
@@ -20,6 +20,11 @@ const OptionMenu = ({
   setWbMode,
   wbMenuVisible = false,
   handleWbMenu,
+  zoomSliderVisible = false,
+  handleZoomSlider,
+  zoomValue,
+  handleZoomValueChange,
+  hideZoomSlider,
 }) => (
   <Grid style={styles.topOptionMenu}>
     <Row>
@@ -33,7 +38,7 @@ const OptionMenu = ({
         </TouchableOpacity>
       </Col>
       <Col style={styles.alignCenter}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleZoomSlider(!zoomSliderVisible)}>
           <MaterialIcons name="zoom-out-map" color="white" size={35} />
         </TouchableOpacity>
       </Col>
@@ -70,6 +75,24 @@ const OptionMenu = ({
           >
             <MaterialIcons name="wb-iridescent" color="white" size={25} />
           </TouchableOpacity>
+        </Col>
+      </Row>
+    ) : (
+      <></>
+    )}
+    {zoomSliderVisible ? (
+      <Row>
+        <Col>
+          <Slider
+            minimumValue={0}
+            maximumValue={1}
+            value={zoomValue}
+            onValueChange={(value) => handleZoomValueChange(value)}
+            onSlidingComplete={() => hideZoomSlider()}
+            style={styles.slider}
+            minimumTrackTintColor="white"
+            thumbTintColor="white"
+          />
         </Col>
       </Row>
     ) : (
